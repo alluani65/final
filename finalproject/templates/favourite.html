@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My favourites</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            {% for favourite in favourite %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ favourite.movie.poster.url }}" class="card-img-top" alt="Movie Poster" width="250" height="250">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ favourite.movie.title }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Release Date:</strong> {{ favourite.movie.date }}</li>
+                        <li class="list-group-item"><strong>Genre:</strong> {{ favourite.movie.genere }}</li>
+                        <li class="list-group-item"><strong>Actors:</strong> {{ favourite.movie.actors }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="{{ favourite.movie.link }}" class="btn btn-primary">Watch Trailer</a><br><br>
+                        <a href="{% url 'userapp:remove_favourite' favourite.movie.id %}" class="btn btn-danger">Remove from favourites</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if favourite.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ favourite.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">Page {{ favourite.number }} of {{ favourite.paginator.num_pages }}</span></li>
+            {% if favourite.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ favourite.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ favourite.paginator.num_pages }}">Last</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</body>
+</html>
+{% endblock %}

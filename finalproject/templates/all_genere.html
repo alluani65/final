@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static%}
+{% if genere %}
+<div class='row my_row'>
+    <div class='mx-auto'>
+        <p><a href="{% url 'finalapp:index' %}">Our Movie collections</a></p>
+    </div>
+</div>
+{% endif %}
+<div class='mx-auto'>
+    {% if genere %}
+    <img src="{{genere.image.url}}" alt=" image" width=1500px;height=300px>
+</div>
+<br>
+<div>
+    <h1 class='text-center my_title' >{{genere.genere}}</h1>
+</div>
+{% else %}
+<div>
+    <img src="{% static 'img/ban.jpg'%}" alt="our movies" width=1550px; height=400px;>
+</div>
+<br>
+<div>
+    <h1 class='text-center '>Our Movie collections</h1>
+    <p class='text-justify'>Science fiction has produced some of cinema's boldest and most glorious flights – in every sense. Sometimes patronised as kids' stuff, the genre seeks to look beyond the parochialism of most realist drama: to see other worlds and other existences, and therefore to look with a new, radically alienated eye at our own. Maybe something in the limitless possibilities of cinema itself spawned sci-fi. George Meliès's A Trip to the Moon (1902) was one of early cinema's biggest hits. In the middle of the 20th century, sci-fi inhabited the B-picture world of monsters and rockets and intuited a "red scare" anxiety about aliens. At the end of the 60s, Stanley Kubrick's 2001: A Space Odyssey broke through into a new level of poetry and wonder. Films like Dark Star and Alien worked a satirical, pessimistic darkness into sci-fi, but George Lucas and Steven Spielberg together expressed its lighter, more hopeful strain</p>
+</div>
+{% endif %}
+<div class='container'>
+    <div class='row mx_auto'>
+        {% for movie in movie %}
+        <div class='my_bottom_margin col-9 col-sm-12  col-md-4 col-lg-4' >
+            <div class='card text-center' style='min-width:18rem'>
+                <a href="{{ movie.get_url }}"> <img class='card-img-top ' src="{{ movie.poster.url }}" alt="{{movie.title }}" width= 350px height= 450px;> </a>
+                <div class='card-body'>
+                    <h4>{{ movie.title }}</h4>
+                    <p>{{ movie.genere}}</p>
+                    <!-- Iterate over reviews for the current movie -->
+                    {% comment %} {% for r in movie.reviews.all %}
+                    <p>Rated by {{ r.user.username }}</p>
+                    <p>{{ r.rating }}/5</p>
+                    {% empty %}
+                    <p>No reviews yet.</p>
+                    {% endfor %} {% endcomment %}
+                    {% if movie.latest_review %}
+                    <h5>Latest Review</h5>
+                    <p>Rated by {{ movie.latest_review.0.user.username }}</p>
+                    <p>rating : {{ movie.latest_review.0.rating }}/5</p>
+                    <p> comment : {{ movie.latest_review.0.text }}</p>
+                {% else %}
+                    <p>No reviews yet.</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class='mx-auto'>
+        {% if movie.paginator.num_pages > 1 %}
+        <hr>
+        <div class='text-center'>
+            {% for m in movie.paginator.page_range %}
+            <a href='?page={{ m }}' class='btn btn-light btn-sm {% if movie.number == m %} active {% endif %}'> {{ m }} </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}

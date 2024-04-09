@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% block body%}
+<div>
+    <p class='text-center my_search'> You results for <b>{{ query }}</b> </p>
+</div>
+<div class='container'>
+    <div class='row mx_auto'>
+ {% for movie in movie %}
+        <div class='my_bottom_margin col-9 col-sm-12  col-md-4 col-lg-4' >
+            <div class='card text-center' style='min-width:18rem'>
+            <a href="{{ movie.get_url }}"> <img class='card-img-top ' src="{{ movie.poster.url }}" alt="{{movie.title}}" width= 350px height= 450px;> </a>
+
+                <div class='card-body'>
+                    <h4>Title :</h4>  <h4>{{ movie.title}}</h4>
+               <h4>Genere :</h4> <p>{{ movie.genere}}</p>
+                </div>
+            </div>
+        </div>
+            {% empty %}
+     <div class='row mx-auto'>
+                <p class='text-center my_search'> Sorry 0 results found for your movie search </p>
+        </div>
+    {% endfor %}
+</div>
+</div>
+        {% endblock %}

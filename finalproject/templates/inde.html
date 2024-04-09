@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+<br>
+{%block body%}
+<div class='container'>
+    <div class='row'>
+        {%for i in movie%}
+        <div class='col-md-4'>
+            <div class="card" style="width: 18rem;">
+                <a href="{%url 'finalapp:detail' i.id%}"><img src="{{i.poster.url}}" class="card-img-top" alt="" width=500 height=400></a>
+                <div class="card-body">
+                 <a href="{%url 'finalapp:detail' i.id%}"> <p class="card-text">{{i.title}}</p></a>
+                 <p class="card-text">{{review.text}}</p>
+                 <p class="card-text">{{review.rating}}</p>
+                 <a href='{{i.link}}'> <buttpn class="btn btn-primary">Trailer Here</button></a>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+</div>
+</div>
+
+{%endblock%}
+

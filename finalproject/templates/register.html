@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>   
+    </head>
+    <body>
+        <form action="" method="POST">
+            {% csrf_token %}
+      
+          <div>
+            <label for="firstname">First name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+        </div>
+        <br>
+        <div>
+            <label for="lastname">Lastname:</label>
+            <input type="text" id="lastname" name="lastname" required>
+        </div>
+        <br>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <br>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="emai" required>
+        </div>
+        <br>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <br>
+        <div>
+            <label for="password">Conform Password:</label>
+            <input type="password" id="password" name="cpassword" required>
+        </div>
+        <br>
+        <a href="{%url 'userloginapp:login' %}"><button type="submit">Submit</button></a>
+    </form>
+    <a href="{%url 'userloginapp:login' %}">Already a User</a>
+         {% if messages %}
+         {% for message in messages %}
+             <p>{{ message }}</p>
+         {% endfor %}
+     {% endif %}
+ </body>
+
+</html>

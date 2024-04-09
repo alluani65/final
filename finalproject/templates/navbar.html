@@ -1,0 +1,61 @@
+{%block navbar%}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{%url 'finalapp:index'%}">Movies</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{%url 'finalapp:index'%}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      
+<div class="dropdown">
+    <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Genere
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for links in links%}
+        <a class="dropdown-item" href="{{links.get_url}}">{{links.genere}}</a>
+        {%endfor%}
+    </div>
+</div>
+      {%if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userloginapp:profile'%}">HELLO {{user.username}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userloginapp:logout'%}">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userapp:favourite' %}">My favourite movies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userloginapp:add'%}">Add movie</a>
+      </li>
+      {%else%}
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userloginapp:login'%}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{%url 'userloginapp:register'%}">Register</a>
+      </li>
+      {%endif%}
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="{%url 'searchapp:search'%}" method='GET'>
+      
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+{%endblock%}

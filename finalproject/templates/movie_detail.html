@@ -1,0 +1,56 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Movie Details</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{ movie.poster.url }}" width="350" height="350">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <font color='blue'><h2>Title :</h2></font>
+            <h3>{{ movie.title }}</h3><br>
+            <font color='blue'><h2>Release date :</h2></font>
+            <h3>{{ movie.date }}</h3><br>
+            <font color='blue'><h2>Genre :</h2></font>
+            <h3>{{ movie.genere }}</h3><br>
+            <a class="btn btn-primary" href="{{ movie.link }}"><button class="btn btn-primary">Trailer</button></a><br><br>
+            <a class="btn btn-primary" href="{% url 'userapp:favourite' %}"><button class="btn btn-secondary">My favourites</button></a><br><br>
+            <a class="btn btn-primary" href="{% url 'userapp:add_favourite' movie.id %}"><button class="btn btn-danger">Add to favourites</button></a><br><br>
+            <a class="btn btn-secondary" href="{% url 'userloginapp:review' movie.id %}"><button class="btn btn-primary">Post your reviews here</button></a><br><br>
+            <a class="btn btn-warning" href="{% url 'userloginapp:edit' movie.id %}">Edit movie</a>
+            <a class="btn btn-danger" href="{% url 'userloginapp:delete' movie.id %}">Delete movie</a><br><br>
+            <font color='blue'><h2>Added by :</h2></font>
+            <h4>{{ movie.added_by }}</h4><br>
+            <font color='blue'><h2>Description :</h2></font>
+            <h6>{{ movie.desc }}</h6><br>
+            
+            <h2>Reviews:</h2>
+            <ul>
+                {% for review in review %}
+                <li>
+                    <strong>Rating: {{ review.rating }}</strong><br>
+                    <em>By: {{ review.user.username }}</em><br>
+                    {{ review.text }}
+                </li>
+                {% empty %}
+                <li>No reviews yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
